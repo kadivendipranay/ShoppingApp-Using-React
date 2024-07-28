@@ -42,7 +42,7 @@ function AddProducts() {
 <input type="text" name="productImageUrl" class="form-control" onChange={collectIt}/> <br></br>
 
 <label>Product Description:</label>  
-<textarea rows="6" cols="40" name="productDescription" class="form-control" onChange={collectIt} /> <br></br>
+<textarea rows="6" cols="30" name="productDescription" class="form-control" onChange={collectIt} /> <br></br>
 
 <label>product Original Price:</label>
 <input type="number" name="productOriginalPrice" class="form-control" onChange={collectIt}/> <br></br>
@@ -57,5 +57,4 @@ function AddProducts() {
 }
 
 export default AddProducts
-
 

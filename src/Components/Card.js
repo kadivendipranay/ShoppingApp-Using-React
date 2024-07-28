@@ -58,3 +58,4 @@ function Card({ updateCart }) {
 }
 
 export default Card;
+

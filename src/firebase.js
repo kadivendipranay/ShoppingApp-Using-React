@@ -25,6 +25,3 @@ export const  myDatabase=firebase.firestore()
 export const auth=getAuth(app) //auth -->Authentication system
 
 export const provider=new GoogleAuthProvider() //provider --> Google Authentication
-
-
-

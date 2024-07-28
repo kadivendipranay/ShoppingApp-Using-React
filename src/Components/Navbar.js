@@ -3,7 +3,9 @@ import { BrowserRouter, Link, Route, Routes, Navigate } from "react-router-dom";
 import AddProducts from './AddProducts';
 import Login from './Login';
 import Card from './Card';
-import * as bootstrap from "bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min'; // Ensure this includes Popper.js
+import { Tooltip, Popover } from 'bootstrap';
 import $ from 'jquery'; // Import jQuery
 
 function Navbar(props) {
@@ -13,7 +15,7 @@ function Navbar(props) {
     // Initialize Bootstrap popovers
     const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="popover"]'));
     popoverTriggerList.map(function (popoverTriggerEl) {
-      return new bootstrap.Popover(popoverTriggerEl, {
+      return new Popover(popoverTriggerEl, {
         trigger: 'manual',
         html: true
       });
@@ -25,10 +27,15 @@ function Navbar(props) {
       if (popoverElement) {
         let cartData = '';
         for (let id in cart) {
-          cartData += `QTY: ${cart[id][0]} NAME: ${cart[id][1]} PRICE: ${cart[id][2]} <br/>`;
+          if (Array.isArray(cart[id])) {
+            const [qty, name, price] = cart[id];
+            if (qty !== undefined && name !== undefined && price !== undefined) {
+              cartData += `QTY: ${qty} NAME: ${name} PRICE: ${price} <br/>`;
+            }
+          }
         }
         cartData += `<a href='/productData.html' class='btn btn-success'>Continue</a>`;
-        
+
         $(popoverElement).attr("data-content", cartData);
         $(popoverElement).popover('show'); // Show the popover
       }
@@ -44,6 +51,14 @@ function Navbar(props) {
       }
     };
   }, [cart]); // Dependency array includes `cart` to re-run effect when `cart` changes
+
+  useEffect(() => {
+    // Initialize Bootstrap tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new Tooltip(tooltipTriggerEl);
+    });
+  }, []);
 
   function updateCart(newCart) {
     setCart(newCart);
